@@ -10,8 +10,14 @@ class HomePage extends GetView<AssistanceController> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: list.length,
-        itemBuilder: (context, index) =>
-            ListTile(title: Text(list[index].name)));
+        itemBuilder: (context, index) => ListTile(
+              title: Text(list[index].name),
+              selectedColor: Colors.blueAccent,
+              selected: controller.isSelected(index),
+              onTap: () {
+                controller.selectAssist(index);
+              },
+            ));
   }
 
   @override
@@ -39,7 +45,10 @@ class HomePage extends GetView<AssistanceController> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => controller.getAssistanceList(),
-      child: const Icon(Icons.refresh)));
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => controller.getAssistanceList(),
+          child: const Icon(Icons.refresh)),
+    );
   }
 }
+

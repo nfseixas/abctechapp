@@ -43,5 +43,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Esse aplicativo necessita da localização para a abertura das ordens de serviço</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Esse aplicativo necessita da localização para a abertura das ordens de serviço</string>
 </dict>
 </plist>
