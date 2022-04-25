@@ -38,8 +38,13 @@ class OrderPage extends GetView<OrderController> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 keyboardType: TextInputType.number,
                 decoration:
-                    const InputDecoration(labelText: "Código do prestador"),
-                textAlign: TextAlign.center,
+                    const InputDecoration(
+                      labelText: "Matrícula do prestador",
+                      icon: Icon(Icons.person),
+                    ),
+                validator: (String? value) {
+                  return (value == null && value?.trim() == '') ? 'Por favor, insira uma matrícula válida' : null;
+                },    
               );
             }),
             Row(children: [
@@ -69,16 +74,22 @@ class OrderPage extends GetView<OrderController> {
             ),
             Row(children: [
               Expanded(
-                  child: ElevatedButton(onPressed: () {
-                FocusScope.of(context).unfocus();
-                controller.finishStartOrder();
-              }, child: Obx((() {
-                if (controller.screenState.value == OrderState.creating) {
-                  return const Text("Iniciar o serviço");
-                } else {
-                  return const Text("Finalizar o serviço");
-                }
-              }))))
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
+                  ),
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    controller.finishStartOrder();
+                  }, child: Obx((() {
+                    if (controller.screenState.value == OrderState.creating) {
+                      return const Text("Iniciar o serviço");
+                    } else {
+                      return const Text("Finalizar o serviço");
+                    }
+                  }))
+                )
+              )
             ]),
           ],
         ),

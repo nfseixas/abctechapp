@@ -10,14 +10,15 @@ class HomePage extends GetView<AssistanceController> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: list.length,
-        itemBuilder: (context, index) => ListTile(
-              title: Text(list[index].name),
-              selectedColor: Colors.blueAccent,
-              selected: controller.isSelected(index),
-              onTap: () {
-                controller.selectAssist(index);
-              },
-            ));
+        itemBuilder: (context, index) => CheckboxListTile(
+          title: Text(list[index].name),
+          value: controller.isSelected(index),
+          onChanged: (bool? value) {
+            controller.selectAssist(index);
+          },
+          secondary: controller.isSelected(index) ? const Icon(Icons.home_repair_service) : const Icon(Icons.home_repair_service_outlined),
+        ),
+      );
   }
 
   @override
@@ -33,8 +34,13 @@ class HomePage extends GetView<AssistanceController> {
               Row(
                 children: const [
                   Expanded(
-                      child: Text("Os serviços disponíveis são:",
-                          textAlign: TextAlign.left))
+                      child: Text("Selecione os serviços desejados:",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 20,
+                          height: 3,
+                        )),
+                  )
                 ],
               ),
               controller.obx((state) => renderAssists(state ?? []),
