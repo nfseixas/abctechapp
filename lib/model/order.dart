@@ -1,18 +1,19 @@
- 
 import 'dart:convert';
 import 'package:abctechapp/model/order_location.dart';
 
 class Order {
+
   int operatorId;
   List<int> services = [];
   OrderLocation? start;
   OrderLocation? end;
 
-  Order(
-      {required this.operatorId,
+  Order({
+      required this.operatorId,
       required this.services,
       required this.start,
-      required this.end});
+      required this.end
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
