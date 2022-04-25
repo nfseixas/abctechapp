@@ -2,8 +2,7 @@ import 'package:abctechapp/model/assistance.dart';
 import 'package:abctechapp/services/assistance_service.dart';
 import 'package:get/get.dart';
 
-class AssistanceController extends GetxController
-    with StateMixin<List<Assistance>> {
+class AssistanceController extends GetxController with StateMixin<List<Assistance>> {
   late AssistanceServiceInterface _service;
   List<Assistance> allAssists = [];
   List<Assistance> selectedAssists = [];
