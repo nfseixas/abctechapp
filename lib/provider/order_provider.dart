@@ -10,6 +10,6 @@ class OrderProvider extends GetConnect implements OrderProviderInterface {
 
   @override
   Future<Response> postOrder(Order order) =>
-      post('${Constants.url}/order', order.toMap());
-      
+    post('${Constants.url}/order', order.toMap());
+
 }

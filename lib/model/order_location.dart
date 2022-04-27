@@ -43,23 +43,23 @@ class OrderLocation {
   String toJson() => json.encode(toMap());
 
   factory OrderLocation.fromJson(String source) =>
-      OrderLocation.fromMap(json.decode(source) as Map<String, dynamic>);
+    OrderLocation.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>
-      'OrderLocation(latitude: $latitude, longitude: $longitude, dateTime: $dateTime)';
+    'OrderLocation(latitude: $latitude, longitude: $longitude, dateTime: $dateTime)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is OrderLocation &&
-        other.latitude == latitude &&
-        other.longitude == longitude &&
-        other.dateTime == dateTime;
+      other.latitude == latitude &&
+      other.longitude == longitude &&
+      other.dateTime == dateTime;
   }
 
   @override
   int get hashCode =>
-      latitude.hashCode ^ longitude.hashCode ^ dateTime.hashCode;
+    latitude.hashCode ^ longitude.hashCode ^ dateTime.hashCode;
 }

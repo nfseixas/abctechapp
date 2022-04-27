@@ -9,10 +9,10 @@ class Order {
   OrderLocation? end;
 
   Order({
-      required this.operatorId,
-      required this.services,
-      required this.start,
-      required this.end
+    required this.operatorId,
+    required this.services,
+    required this.start,
+    required this.end
   });
 
   Map<String, dynamic> toMap() {

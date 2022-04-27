@@ -30,38 +30,32 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
   }
 
   Future<Position> _getLocation() async {
-
     Position position = await _geolocationService.getPosition();
     return Future.sync(() => position);
-
   }
 
   OrderLocation orderLocationFromPosition(Position position) {
-
     return OrderLocation(
-        latitude: position.latitude,
-        longitude: position.longitude,
-        dateTime: DateTime.now());
-
+      latitude: position.latitude,
+      longitude: position.longitude,
+      dateTime: DateTime.now()
+    );
   }
 
   List<int> getServicesIds() {
-
     return selectedAssistances.map((e) => e.id).toList();
-
   }
 
   finishStartOrder() {
-
     if (operatorIdController.text.isEmpty) {
       Get.snackbar("Erro", "Para continuar, preencha a matricula do prestador",
-            backgroundColor: Colors.redAccent);
+        backgroundColor: Colors.redAccent);
       return;
     }
 
     if (getServicesIds().isEmpty) {
       Get.snackbar("Erro", "Para continuar, selecione pelo menos um serviço",
-            backgroundColor: Colors.redAccent);
+        backgroundColor: Colors.redAccent);
       return;
     }
 
@@ -69,18 +63,20 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
       case OrderState.creating:
         _getLocation().then((value) {
           _order = Order(
-              operatorId: int.parse(operatorIdController.text),
-              services: getServicesIds(),
-              start: orderLocationFromPosition(value),
-              end: null);
+            operatorId: int.parse(operatorIdController.text),
+            services: getServicesIds(),
+            start: orderLocationFromPosition(value),
+            end: null
+          );
           screenState.value = OrderState.started;
         }).catchError((error) {
           Get.snackbar("Erro", "Para continuar, permita o acesso a sua localização",
-                  backgroundColor: Colors.redAccent);
+            backgroundColor: Colors.redAccent);
           screenState.value = OrderState.creating;
         });
         screenState.value = OrderState.started;
         break;
+
       case OrderState.started:
         change(null, status: RxStatus.loading());
         _getLocation().then((value) {
@@ -88,49 +84,41 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
           _createOrder();
         }).catchError((error) {
           Get.snackbar("Erro", "Para continuar, permita o acesso a sua localização",
-                  backgroundColor: Colors.redAccent);
+            backgroundColor: Colors.redAccent);
           screenState.value = OrderState.creating;
         });
-
         break;
+
       default:
-    }
-    
+    }  
   }
 
   _createOrder() {
-
     screenState.value = OrderState.finished;
     _orderService.createOrder(_order).then((value) {
       if (value.success) {
         Get.snackbar("Sucesso", "Ordem de serviço criada com sucesso",
-            backgroundColor: Colors.greenAccent);
+          backgroundColor: Colors.greenAccent);
       }
       clearForm();
     }).catchError((error) {
       Get.snackbar("Error", error.toString(),
-          backgroundColor: Colors.redAccent);
+        backgroundColor: Colors.redAccent);
       clearForm();
     });
-
   }
 
   editServices() {
-
     if (screenState.value != OrderState.creating) {
       return null;
     }
-
     Get.toNamed("/services", arguments: selectedAssistances);
-
   }
 
   void clearForm() {
-
     screenState.value = OrderState.creating;
     operatorIdController.text = "";
     selectedAssistances.clear();
     change(null, status: RxStatus.success());
-
   }
 }

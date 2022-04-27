@@ -11,6 +11,7 @@ abstract class OrderServiceInterface {
 }
 
 class OrderService extends GetxService implements OrderServiceInterface {
+  
   final OrderProviderInterface _orderProvider;
 
   OrderService(this._orderProvider);

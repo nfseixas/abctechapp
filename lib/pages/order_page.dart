@@ -5,18 +5,19 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class OrderPage extends GetView<OrderController> {
+  
   const OrderPage({Key? key}) : super(key: key);
 
   Widget renderAssists(List<Assistance> assists) {
     return ListView.builder(
-        shrinkWrap: true,
-        itemCount: assists.length,
-        itemBuilder: (context, index) =>
-            ListTile(
-              title: Text(assists[index].name),
-              leading: const Icon(Icons.room_service),
-              dense: true,
-            )
+      shrinkWrap: true,
+      itemCount: assists.length,
+      itemBuilder: (context, index) =>
+        ListTile(
+          title: Text(assists[index].name),
+          leading: const Icon(Icons.room_service),
+          dense: true,
+        )
     );
   }
 
@@ -33,11 +34,14 @@ class OrderPage extends GetView<OrderController> {
             children: <Widget>[
               Row(children: const [
                 Expanded(
-                    child: Text(
-                  'Preencha o fomulário de ordem de serviço',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                ))
+                  child: Text('Preencha o fomulário de ordem de serviço',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0, 
+                      fontWeight: FontWeight.bold
+                    ),
+                  )
+                )
               ]),
               Obx(() {
                 var enabled = controller.screenState.value == OrderState.creating;
@@ -47,33 +51,40 @@ class OrderPage extends GetView<OrderController> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   keyboardType: TextInputType.number,
                   decoration:
-                      const InputDecoration(
-                        labelText: "Matrícula do prestador",
-                        icon: Icon(Icons.person),
-                      ),
+                    const InputDecoration(
+                      labelText: "Matrícula do prestador",
+                      icon: Icon(Icons.person),
+                    ),
                 );
               }),
               Row(children: [
                 const Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 25),
-                        child: Text(
-                          'Selecione os serviços a serem prestados',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 14.0, fontWeight: FontWeight.bold),
-                        ))),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 25, bottom: 25),
+                    child: Text('Selecione os serviços a serem prestados',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 14.0, 
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  )
+                ),
                 Ink(
-                    decoration: const ShapeDecoration(
-                        shape: CircleBorder(), color: Colors.blueAccent),
-                    child: IconButton(
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => controller.editServices()),
-                    width: 40,
-                    height: 40)
+                  decoration: const ShapeDecoration(
+                    shape: CircleBorder(), 
+                    color: Colors.blueAccent
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => controller.editServices()
+                  ),
+                  width: 40,
+                  height: 40
+                )
               ]),
               Obx(
                 () => renderAssists(controller.selectedAssistances),
@@ -124,14 +135,15 @@ class OrderPage extends GetView<OrderController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Ordem de serviço"),
-        ),
-        body: Container(
-            constraints: const BoxConstraints.expand(),
-            padding: const EdgeInsets.all(10.0),
-            child: controller.obx((state) => renderFromScreen(context),
-                onLoading: const Center(child: CircularProgressIndicator()),
-                onError: (error) => Text(error.toString()))));
+      appBar: AppBar(title: const Text("Ordem de serviço")),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        padding: const EdgeInsets.all(10.0),
+        child: controller.obx((state) => renderFromScreen(context),
+          onLoading: const Center(child: CircularProgressIndicator()),
+          onError: (error) => Text(error.toString())
+        )
+      )
+    );
   }
 }
