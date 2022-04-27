@@ -33,7 +33,7 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
 
     Position position = await _geolocationService.getPosition();
     return Future.sync(() => position);
-    
+
   }
 
   OrderLocation orderLocationFromPosition(Position position) {
@@ -53,6 +53,18 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
 
   finishStartOrder() {
 
+    if (operatorIdController.text.isEmpty) {
+      Get.snackbar("Erro", "Para continuar, preencha a matricula do prestador",
+            backgroundColor: Colors.redAccent);
+      return;
+    }
+
+    if (getServicesIds().isEmpty) {
+      Get.snackbar("Erro", "Para continuar, selecione pelo menos um serviço",
+            backgroundColor: Colors.redAccent);
+      return;
+    }
+
     switch (screenState.value) {
       case OrderState.creating:
         _getLocation().then((value) {
@@ -61,6 +73,11 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
               services: getServicesIds(),
               start: orderLocationFromPosition(value),
               end: null);
+          screenState.value = OrderState.started;
+        }).catchError((error) {
+          Get.snackbar("Erro", "Para continuar, permita o acesso a sua localização",
+                  backgroundColor: Colors.redAccent);
+          screenState.value = OrderState.creating;
         });
         screenState.value = OrderState.started;
         break;
@@ -69,6 +86,10 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
         _getLocation().then((value) {
           _order.end = orderLocationFromPosition(value);
           _createOrder();
+        }).catchError((error) {
+          Get.snackbar("Erro", "Para continuar, permita o acesso a sua localização",
+                  backgroundColor: Colors.redAccent);
+          screenState.value = OrderState.creating;
         });
 
         break;

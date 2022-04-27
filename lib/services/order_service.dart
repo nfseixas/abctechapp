@@ -20,13 +20,31 @@ class OrderService extends GetxService implements OrderServiceInterface {
     Response response = await _orderProvider.postOrder(order);
     try {
       if (response.hasError) {
-        //TODO: tratar os possíveis cenários de erro da API
-        return Future.error(ErrorDescription('Erro na API'));
+        var messageError = "Erro na API";
+        switch (response.statusCode) {
+          case 400: 
+            messageError = "Servidor não conseguiu processar sua solicitação";
+            break;
+          case 403: 
+            messageError = "Você não tem acesso para criar uma ordem";
+            break;
+          case 408: 
+            messageError = "Servidor demorou mais do que o esperado, tente novamente mais tarde";
+            break;
+          case 500:
+            messageError = "Sistema indisponível, tente novamente mais tarde";
+            break;
+          case 503:
+            messageError = "Servidor não pode processar essa solicitação no momento";
+            break;
+          default:
+        }
+        return Future.error(ErrorDescription(messageError));
       }
       return Future.sync(() => OrderCreated(success: true, message: ""));
     } catch (e) {
       e.printError();
-      return Future.error(ErrorDescription("Erro na esperado"));
+      return Future.error(ErrorDescription("Erro não esperado, tente mais tarde"));
     }
   }
 }

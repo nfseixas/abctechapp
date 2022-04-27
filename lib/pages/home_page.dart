@@ -18,7 +18,7 @@ class HomePage extends GetView<AssistanceController> {
           },
           secondary: controller.isSelected(index) ? const Icon(Icons.home_repair_service) : const Icon(Icons.home_repair_service_outlined),
         ),
-      );
+    );
   }
 
   @override
