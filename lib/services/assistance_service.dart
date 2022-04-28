@@ -22,8 +22,8 @@ class AssistanceService extends GetxService implements AssistanceServiceInterfac
 
     try {
       List<Assistance> listResult = response.body
-          .map<Assistance>((item) => Assistance.fromMap(item))
-          .toList();
+        .map<Assistance>((item) => Assistance.fromMap(item))
+        .toList();
 
       return Future.sync(() => listResult);
     } catch (e) {

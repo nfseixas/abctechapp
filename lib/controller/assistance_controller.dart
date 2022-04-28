@@ -3,6 +3,7 @@ import 'package:abctechapp/services/assistance_service.dart';
 import 'package:get/get.dart';
 
 class AssistanceController extends GetxController with StateMixin<List<Assistance>> {
+
   late AssistanceServiceInterface _service;
   List<Assistance> allAssists = [];
   List<Assistance> selectedAssists = [];
@@ -12,7 +13,6 @@ class AssistanceController extends GetxController with StateMixin<List<Assistanc
     super.onInit();
     _service = Get.find<AssistanceServiceInterface>();
     selectedAssists = Get.arguments;
-
     getAssistanceList();
   }
 
@@ -33,13 +33,11 @@ class AssistanceController extends GetxController with StateMixin<List<Assistanc
   }
 
   void selectAssist(int index) {
-
     if (!isSelected(index)) {
       selectedAssists.add(allAssists[index]);
     } else {
       selectedAssists.remove(allAssists[index]);
     }
-
     change(allAssists, status: RxStatus.success());
   }
 }

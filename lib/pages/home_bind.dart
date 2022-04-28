@@ -7,5 +7,4 @@ class HomeBind extends Bindings {
   void dependencies() {
     Get.lazyPut<AssistanceController>(() => AssistanceController());
   }
-  
 }

@@ -19,7 +19,6 @@ void initServices() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
 
@@ -31,9 +30,10 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         GetPage(
-            name: "/services",
-            page: () => const HomePage(),
-            binding: HomeBind()),
+          name: "/services",
+          page: () => const HomePage(),
+          binding: HomeBind()
+        ),
         GetPage(name: "/", page: () => const OrderPage(), binding: OrderBind())
       ],
     );

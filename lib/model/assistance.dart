@@ -42,20 +42,20 @@ class Assistance {
   String toJson() => json.encode(toMap());
 
   factory Assistance.fromJson(String source) =>
-      Assistance.fromMap(json.decode(source) as Map<String, dynamic>);
+    Assistance.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>
-      'Assistance(id: $id, name: $name, description: $description)';
+    'Assistance(id: $id, name: $name, description: $description)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is Assistance &&
-        other.id == id &&
-        other.name == name &&
-        other.description == description;
+      other.id == id &&
+      other.name == name &&
+      other.description == description;
   }
 
   @override
